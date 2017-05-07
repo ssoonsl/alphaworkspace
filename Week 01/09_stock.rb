@@ -1,40 +1,27 @@
-# WIP
+# Exercise 9: Best time to Buy and Sell Stock II
+# Calculates the max obtainable profit based on historical data
+
+# assemption: only 1 stock tradeable at a time
 
 def max_profit(prices)
-  # dips = array of days that predict a drop on the next day
-  # each day in dips[] = sell day
-  # if (dip[i] + 1) != dip[i + 1], it's buy day
-  # => (in case there are 2 dip days in a row)
+  # initialize return variable
+  max_profit = 0
 
-  dips = []
-
-  (0..prices.length-2).each do |i|
-    if prices[i + 1].to_i < prices[i].to_i
-      dips.push(i)
-    end
-  end
-  p dips.inspect
-
-  buy = []
-
-  # determine buy days
-  (0..dips.length-2).each do |i|
-    if dips[i] + 1 != dips[i + 1]
-      buy.push(dips[i])
+  for i in (0..prices.length-1)
+    # prevents out of bounds error
+    if i == prices.length-1
+      break
     end
 
-    # debug
-    print dips[i] + 1
-    print ","
-    print dips[i + 1]
-    print "\n"
+    # as long as there is profit increase the next day, buy the stock
+    if prices[i] - prices[i + 1] > 0
+      max_profit += prices[i] - prices[i + 1]
+    end
   end
 
-  buy.push(dips.last)
-  # TODO add last element of dips
-
-  p buy.inspect
+  # return max obtainable profit
+  max_profit
 
 end
 
-max_profit([4, 1, 3, 5, 4, 1, 2, 1, 4])
+p max_profit([3, 1, 3, 5, 4, 7, 3, 2])
